@@ -20,7 +20,7 @@ namespace FBM.Event.DefaultManager.Extensions
         /// <returns></returns>
         public static IServiceCollection AddFBMEventClientWithDefaultManager(this IServiceCollection collection, Action<EventManagerOptions> eventManagerOptions)
         {
-            collection.AddSingleton<ICacheManager, CacheManager>();
+            collection.AddSingleton<ICacheManager, DefaultCacheManager>();
             collection.AddSingleton<IDefaultRabbitMQPublisher, DefaultRabbitMQPublisher>();
 
             collection.AddFBMEventClient<IDefaultRabbitMQPublisher, ICacheManager>(eventManagerOptions);

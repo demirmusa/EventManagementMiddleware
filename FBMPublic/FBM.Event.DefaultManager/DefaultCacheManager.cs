@@ -10,10 +10,10 @@ namespace FBM.Event.DefaultManager
     /// <para>If you have distributed cache like redis or you just want to use another cache system,
     /// Override this or crate one which inheritanced from ICacheManager and use your own one </para>
     /// </summary>
-    public class CacheManager : ICacheManager
+    public class DefaultCacheManager : ICacheManager
     {
         IMemoryCache _memoryCache;
-        public CacheManager(IMemoryCache memoryCache)
+        public DefaultCacheManager(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
