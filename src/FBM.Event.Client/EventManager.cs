@@ -73,18 +73,15 @@ namespace FBM.Event.Client
         //TODO: extend
         private void CheckEventFromServer(Type t, string eventName, Dictionary<string, FBMEventServerDto> checkedAndCachedEventsDic = null)
         {
-            Dictionary<string, string> propTypeNameDic = new Dictionary<string, string>();
-            //get all properties of event 
-            var properties = t.GetProperties();
-            foreach (var p in properties)
-                propTypeNameDic.Add(p.Name, p.PropertyType.Name);
+
+            throw new NotImplementedException("");
 
             var client = new RestClient(_options.EventApiServerAddress);
             // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
             var request = new RestRequest("FBMEvents", Method.POST);
             //send event with properties to server , server will check it if its ok it will return 
-            request.AddJsonBody(new { eventProperties = propTypeNameDic, eventName });
+            request.AddJsonBody(new { eventProperties = "", eventName });
 
             IRestResponse response = client.Execute(request);
 

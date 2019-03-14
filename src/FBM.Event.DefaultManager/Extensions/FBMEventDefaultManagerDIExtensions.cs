@@ -3,6 +3,7 @@ using FBM.Event.Client.Extensions;
 using FBM.Event.Client.interfaces;
 using FBM.Event.DefaultManager.Dto;
 using FBM.Event.DefaultManager.interfaces;
+using FBM.Event.UniqueController.Dto;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using System;
@@ -18,16 +19,19 @@ namespace FBM.Event.DefaultManager.Extensions
         /// <param name="collection"></param>
         /// <param name="eventManagerOptions"></param>
         /// <returns></returns>
-        public static IServiceCollection AddFBMEventClientWithDefaultManager(this IServiceCollection collection, Action<EventManagerOptions> eventManagerOptions)
+        public static IServiceCollection AddFBMEventClientWithDefaultManager(this IServiceCollection collection, 
+            Action<EventManagerOptions> eventManagerOptions,
+            Action<EventCheckerOptions> eventCheckerOptionsAction)
         {
             collection.AddSingleton<ICacheManager, DefaultCacheManager>();
             collection.AddSingleton<IDefaultRabbitMQPublisher, DefaultRabbitMQPublisher>();
 
-            collection.AddFBMEventClient<IDefaultRabbitMQPublisher, ICacheManager>(eventManagerOptions);
+            collection.AddFBMEventClient<IDefaultRabbitMQPublisher, ICacheManager>(eventManagerOptions,eventCheckerOptionsAction);
             return collection;
         }
 
-        public static IServiceProvider InitializeFBMEventClientDefaultManager(this IServiceProvider provider, string hostName = "localhost")
+        public static IServiceProvider InitializeFBMEventClientDefaultManager(this IServiceProvider provider,
+            string hostName = "localhost")
         {
             var _rabbitMQPublisher = provider.GetService<IDefaultRabbitMQPublisher>();
 
