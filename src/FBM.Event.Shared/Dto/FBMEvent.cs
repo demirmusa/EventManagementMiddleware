@@ -1,9 +1,9 @@
-﻿using FBM.Event.Client.interfaces;
+﻿using FBM.Event.Shared.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FBM.Event.Client.Dto
+namespace FBM.Event.Shared.Dto
 {
     public class FBMEvent<T> where T : IFBMEvent
     {

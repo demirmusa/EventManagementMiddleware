@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FBM.Event.UniqueController.Dto
-{
-    public class FBMEventInfoRequestDto<T>
+namespace FBM.Event.Shared.Dto
+{   
+    public class FBMEventInfoDto
     {
         public string EventName { get; set; }
-        public T Event { get; set; }
+        public string EventPropertiesJson { get; set; }
     }
 }

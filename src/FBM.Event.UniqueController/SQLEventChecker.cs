@@ -1,4 +1,6 @@
-﻿using FBM.Event.UniqueController.Data.dbEntities;
+﻿using FBM.Event.Shared.Dto;
+using FBM.Event.Shared.interfaces;
+using FBM.Event.UniqueController.Data.dbEntities;
 using FBM.Event.UniqueController.Dto;
 using FBM.Event.UniqueController.Exceptions;
 using FBM.Event.UniqueController.interfaces;
@@ -17,18 +19,18 @@ namespace FBM.Event.UniqueController
     public class SQLEventChecker : IEventChecker
     {
         UniqueControllerDbContext _context;
-        public SQLEventChecker(UniqueControllerDbContext context)
+        internal SQLEventChecker(UniqueControllerDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<FBMEventInfo>> GetAllRegisteredEvents()
+        public async Task<List<FBMEventInfoDto>> GetAllRegisteredEvents()
         {
-            return await _context.FBMEventInfos.ToListAsync();
+            return await _context.FBMEventInfos.Select(x => new FBMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
         }
-        public async Task<FBMEventInfo> CheckOrAddFBMEventInfo<T>(FBMEventInfoRequestDto<T> data) where T : new()
+        public async Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent
         {
-            var propertiesJson = GeneretePropertiesJson(data.Event);
+            var propertiesJson = GeneretePropertiesJson(data.EventData);
 
             //if event exist
             if (await _context.FBMEventInfos.AnyAsync(x => x.EventName == data.EventName))
@@ -38,7 +40,11 @@ namespace FBM.Event.UniqueController
                     throw new FBMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
                         $" Registered properties: {dbResult.EventPropertiesJson}");
 
-                return dbResult;// its ok. there is no problem. Return event info
+                return new FBMEventInfoDto
+                {
+                    EventName = dbResult.EventName,
+                    EventPropertiesJson = dbResult.EventPropertiesJson
+                };// its ok. there is no problem. Return event info
             }
             else // event not exist. Create it
             {
@@ -51,10 +57,14 @@ namespace FBM.Event.UniqueController
                     EventPropertiesJson = propertiesJson
                 };
                 await _context.FBMEventInfos.AddAsync(eventInfo);
-                return eventInfo;
+                return new FBMEventInfoDto
+                {
+                    EventName = data.EventName,
+                    EventPropertiesJson = propertiesJson
+                };
             }
         }
-        public string GeneretePropertiesJson<T>(T data) where T : new()
+        public string GeneretePropertiesJson<T>(T data) where T : IFBMEvent
         {
             Dictionary<string, string> propTypeNameDic = new Dictionary<string, string>();
             //get all properties of event 

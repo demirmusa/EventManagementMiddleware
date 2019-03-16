@@ -14,4 +14,8 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FBM.Event.Shared\FBM.Event.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

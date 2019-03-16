@@ -1,4 +1,6 @@
-﻿using FBM.Event.UniqueController.Data.dbEntities;
+﻿using FBM.Event.Shared.Dto;
+using FBM.Event.Shared.interfaces;
+using FBM.Event.UniqueController.Data.dbEntities;
 using FBM.Event.UniqueController.Dto;
 using FBM.Event.UniqueController.interfaces;
 using System;
@@ -13,17 +15,17 @@ namespace FBM.Event.UniqueController
     /// </summary>
     public class WebApiEventChecker : IEventChecker
     {
-        public Task<FBMEventInfo> CheckOrAddFBMEventInfo<T>(FBMEventInfoRequestDto<T> data) where T : new()
+        public Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent
         {
             throw new NotImplementedException();
         }
 
-        public string GeneretePropertiesJson<T>(T data) where T : new()
+        public string GeneretePropertiesJson<T>(T data) where T : IFBMEvent
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<FBMEventInfo>> GetAllRegisteredEvents()
+        public Task<List<FBMEventInfoDto>> GetAllRegisteredEvents()
         {
             throw new NotImplementedException();
         }

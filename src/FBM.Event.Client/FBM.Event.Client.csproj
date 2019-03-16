@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FBM.Event.Shared\FBM.Event.Shared.csproj" />
     <ProjectReference Include="..\FBM.Event.UniqueController\FBM.Event.UniqueController.csproj" />
   </ItemGroup>
 

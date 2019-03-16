@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FBM.Event.Client", "FBM.Eve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FBM.Event.DefaultManager", "FBM.Event.DefaultManager\FBM.Event.DefaultManager.csproj", "{DD47FBB0-18D0-4BED-81F0-EAB9D0AE7BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBM.Event.UniqueController", "FBM.Event.UniqueController\FBM.Event.UniqueController.csproj", "{FF8980F6-6C68-47CD-8F42-145E8711FE10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FBM.Event.UniqueController", "FBM.Event.UniqueController\FBM.Event.UniqueController.csproj", "{FF8980F6-6C68-47CD-8F42-145E8711FE10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBM.Event.Shared", "FBM.Event.Shared\FBM.Event.Shared.csproj", "{5939C23F-ADCD-40F7-BC06-8040E9EC3718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{FF8980F6-6C68-47CD-8F42-145E8711FE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8980F6-6C68-47CD-8F42-145E8711FE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8980F6-6C68-47CD-8F42-145E8711FE10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5939C23F-ADCD-40F7-BC06-8040E9EC3718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5939C23F-ADCD-40F7-BC06-8040E9EC3718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5939C23F-ADCD-40F7-BC06-8040E9EC3718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5939C23F-ADCD-40F7-BC06-8040E9EC3718}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

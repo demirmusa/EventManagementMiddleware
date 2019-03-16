@@ -1,5 +1,7 @@
 ﻿using FBM.Event.Client.Dto;
 using FBM.Event.Client.interfaces;
+using FBM.Event.Shared.Dto;
+using FBM.Event.Shared.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
