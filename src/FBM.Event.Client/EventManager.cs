@@ -2,15 +2,14 @@
 using FBM.Event.Client.interfaces;
 using FBM.Event.Shared.Dto;
 using FBM.Event.Shared.interfaces;
-using FBM.Event.UniqueController.Data.dbEntities;
 using FBM.Event.UniqueController.Exceptions;
 using FBM.Event.UniqueController.interfaces;
 using Microsoft.Extensions.Options;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace FBM.Event.Client
 {
@@ -25,9 +24,6 @@ namespace FBM.Event.Client
             _cacheManager = cacheManager;
             if (options.Value == null)
                 throw new Exception("EventManagerOptions can not be null");
-
-            if (options.Value.CheckEventOnServer && string.IsNullOrEmpty(options.Value.EventApiServerAddress))
-                throw new Exception("EventApiServerAddress can not be null");
 
             if (string.IsNullOrEmpty(options.Value.RegisteredEventsMemoryCacheKey))
                 options.Value.RegisteredEventsMemoryCacheKey = "EventManager.RegisteredEvents";
@@ -46,7 +42,7 @@ namespace FBM.Event.Client
             }
             return t.Name;//otherwise event name is class name
         }
-        public FBMEvent<T> GetEvent<T>(T e)
+        public async Task<FBMEvent<T>> GetEventAsync<T>(T e)
             where T : IFBMEvent
         {
             string eventName = GetEventName(e.GetType());
@@ -56,36 +52,56 @@ namespace FBM.Event.Client
                 EventData = e,
                 EventName = eventName
             };
-            if (_options.CheckEventOnServer)
-                CheckEvent(newEvent, eventName);
+            if (_options.CheckIsEventUnique)
+                await CheckEvent(newEvent, eventName);
 
             return newEvent;
         }
-        private void CheckEvent<T>(FBMEvent<T> fBMEvent, string eventName)
+
+        private async Task CheckEvent<T>(FBMEvent<T> fBMEvent, string eventName)
             where T : IFBMEvent
         {
-            if (_cacheManager.TryGetValue(_options.RegisteredEventsMemoryCacheKey, out Dictionary<string, FBMEventInfoDto> checkedAndCachedEventsDic))
+            var propJson = _eventChecker.GeneretePropertiesJson(fBMEvent.EventData);
+            var dict = GetAllEventsDic();
+
+            if (dict.ContainsKey(eventName))
             {
-                if (!checkedAndCachedEventsDic.ContainsKey(eventName))// if dictionary contains event info , it means we already check it and add it to dictionary                  
-                    GetEventFromStorage(fBMEvent, checkedAndCachedEventsDic);
-                //else
-                //{
-                //    //do nothing. this event is in checked list 
-                //}
+                if (dict[eventName].EventPropertiesJson == propJson)
+                    return;// its ok do nothing                
+                else
+                    throw new Exception($"Registered event has different properties.Event Name: {eventName}, Registered Prop:{dict[eventName].EventPropertiesJson}, Sended Props: {propJson}");
             }
             else
-                LoadAllRegisteredEvents();
+            {
+                await GetEventFromStorage(fBMEvent, dict);
+                if (dict[eventName].EventPropertiesJson == propJson)
+                    return;// its ok do nothing                
+                else
+                    throw new Exception($"Registered event has different properties.Event Name: {eventName}, Registered Prop:{dict[eventName].EventPropertiesJson}, Sended Props: {propJson}");
+
+            }
+        }
+        private Dictionary<string, FBMEventInfoDto> GetAllEventsDic()
+        {
+            if (_cacheManager.TryGetValue(_options.RegisteredEventsMemoryCacheKey, out Dictionary<string, FBMEventInfoDto> eventsDic))
+                return eventsDic;
+            else
+                return LoadAllRegisteredEvents();
+
         }
 
-
-        private async void GetEventFromStorage<T>(FBMEvent<T> fBMEvent, Dictionary<string, FBMEventInfoDto> checkedAndCachedEventsDic = null)
+        private async Task GetEventFromStorage<T>(FBMEvent<T> fBMEvent, Dictionary<string, FBMEventInfoDto> checkedAndCachedEventsDic = null)
             where T : IFBMEvent
         {
             try
             {
                 var check = await _eventChecker.CheckOrAddFBMEventInfo(fBMEvent);
                 if (check != null && checkedAndCachedEventsDic != null)
+                {
                     checkedAndCachedEventsDic.Add(check.EventName, check);
+                    _cacheManager.Set(_options.RegisteredEventsMemoryCacheKey, checkedAndCachedEventsDic,
+                        TimeSpan.FromMilliseconds(_options.CacheExpireTimeMinute));
+                }
             }
             catch (FBMEventInvalidPropertyException e)
             {
@@ -97,11 +113,11 @@ namespace FBM.Event.Client
                 throw new Exception("Error while checkng event propert on storage.See inner exception for more information.", e);
             }
         }
-        private async void LoadAllRegisteredEvents()
+        private Dictionary<string, FBMEventInfoDto> LoadAllRegisteredEvents()
         {
             try
             {
-                var list = await _eventChecker.GetAllRegisteredEvents();
+                var list = _eventChecker.GetAllRegisteredEvents();
 
                 Dictionary<string, FBMEventInfoDto> dict;
                 if (list != null && list.Count > 0)
@@ -110,6 +126,7 @@ namespace FBM.Event.Client
                     dict = new Dictionary<string, FBMEventInfoDto>();
 
                 _cacheManager.Set(_options.RegisteredEventsMemoryCacheKey, dict, TimeSpan.FromMilliseconds(_options.CacheExpireTimeMinute));
+                return dict;
             }
             catch (Exception e)
             {

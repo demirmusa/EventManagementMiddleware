@@ -11,7 +11,8 @@ namespace FBM.Event.UniqueController.interfaces
 {
     public interface IEventChecker
     {
-        Task<List<FBMEventInfoDto>> GetAllRegisteredEvents();
+        Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync();
+        List<FBMEventInfoDto> GetAllRegisteredEvents();
         Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent;
         string GeneretePropertiesJson<T>(T data) where T : IFBMEvent;
     }

@@ -25,7 +25,14 @@ namespace FBM.Event.UniqueController
             throw new NotImplementedException();
         }
 
-        public Task<List<FBMEventInfoDto>> GetAllRegisteredEvents()
+     
+
+        public Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<FBMEventInfoDto> GetAllRegisteredEvents()
         {
             throw new NotImplementedException();
         }

@@ -19,14 +19,19 @@ namespace FBM.Event.UniqueController
     public class SQLEventChecker : IEventChecker
     {
         UniqueControllerDbContext _context;
-        internal SQLEventChecker(UniqueControllerDbContext context)
+        public SQLEventChecker(UniqueControllerDbContext context)
         {
             _context = context;
+            _context.Database.EnsureCreated();
         }
 
-        public async Task<List<FBMEventInfoDto>> GetAllRegisteredEvents()
+        public async Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync()
         {
             return await _context.FBMEventInfos.Select(x => new FBMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
+        }
+        public List<FBMEventInfoDto> GetAllRegisteredEvents()
+        {
+            return _context.FBMEventInfos.Select(x => new FBMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
         }
         public async Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent
         {
@@ -57,6 +62,7 @@ namespace FBM.Event.UniqueController
                     EventPropertiesJson = propertiesJson
                 };
                 await _context.FBMEventInfos.AddAsync(eventInfo);
+                await _context.SaveChangesAsync();
                 return new FBMEventInfoDto
                 {
                     EventName = data.EventName,

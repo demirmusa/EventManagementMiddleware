@@ -5,6 +5,7 @@ using FBM.Event.Shared.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FBM.Event.Client
 {
@@ -23,12 +24,12 @@ namespace FBM.Event.Client
         }
 
 
-        public void Publish<T>(T nodeEvent) where T : IFBMEvent
+        public async Task PublishAsync<T>(T nodeEvent) where T : IFBMEvent
         {
             FBMEvent<T> fbmNodeEvent;
             try
             {
-                fbmNodeEvent = _eventManager.GetEvent(nodeEvent);
+                fbmNodeEvent = await _eventManager.GetEventAsync(nodeEvent);
             }
             catch (Exception e)
             {
