@@ -30,6 +30,7 @@ namespace BasicPublisherConsole
                },
                checkerOptions =>
                {
+                   checkerOptions.UseSQL(sql => sql.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=eventDB;trusted_connection=yes;"));
                    //checkerOptions.UseWebApi()
                });
 
