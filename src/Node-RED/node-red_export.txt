@@ -1,0 +1,649 @@
+[
+    {
+        "id": "ba438512.f81158",
+        "type": "tab",
+        "label": "RabbitMQManagement",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5121259d.060a7c",
+        "type": "subflow",
+        "name": "RabbitMQKuyruk",
+        "info": "",
+        "category": "RabbitMQSubFlows",
+        "in": [],
+        "out": [
+            {
+                "x": 900,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "54687ad4.792354",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "fb92eec7.a6caf",
+        "type": "subflow",
+        "name": "PublishEvent",
+        "info": "",
+        "category": "RabbitMQSubFlows",
+        "in": [
+            {
+                "x": 140,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "55c9516f.a4247"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "47f246e3.953dc8",
+        "type": "subflow",
+        "name": "CreateEmail",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "cd0d0756.7821b8"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "9000c3ab.2a8f7",
+        "type": "subflow",
+        "name": "UserCreatedSubFlow",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 180,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "f4ca31d8.03f8e"
+                    },
+                    {
+                        "id": "9838cf77.97bd1"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "2886c7c3.6807c8",
+        "type": "subflow",
+        "name": "GetUserInformationFromApi",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "4a7b2a7a.fe4d54"
+                    }
+                ]
+            }
+        ],
+        "out": []
+    },
+    {
+        "id": "aec610aa.82492",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "c01eb5f9.04b558",
+        "type": "amqp-server",
+        "z": "",
+        "host": "localhost22",
+        "port": "5672",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": true,
+        "verifyservercert": true,
+        "usetopology": true,
+        "topology": "{\n    \"exchanges\": [\n        {\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n        {\"name\": \"exchange2\"}\n    ],\n    \"queues\": [\n        {\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n        {\"name\": \"queue2\"}\n    ],\n    \"bindings\": [\n        {\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n        {\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n        {\"source\": \"exchange2\", \"queue\": \"queue2\"}\n    ]\n}"
+    },
+    {
+        "id": "ace5dba8.4296a8",
+        "type": "amqp2-server",
+        "z": "",
+        "host": "localhost",
+        "port": "5672",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true
+    },
+    {
+        "id": "19a37b52.307355",
+        "type": "amqp-server",
+        "z": "",
+        "host": "localhost",
+        "port": "5672",
+        "vhost": "",
+        "keepalive": "30",
+        "usetls": false,
+        "verifyservercert": true,
+        "usetopology": false,
+        "topology": "{\n\t\"exchanges\": [\n\t\t{\"name\": \"exchange1\", \"type\": \"direct\", \"options\": {\"durable\": false}},\n\t\t{\"name\": \"exchange2\"}\n\t],\n\t\"queues\": [\n\t\t{\"name\": \"queue1\", \"options\": {\"messageTtl\": 60000}},\n\t\t{\"name\": \"queue2\"}\n\t],\n\t\"bindings\": [\n\t\t{\"source\": \"exchange1\", \"queue\": \"queue1\", \"pattern\": \"debug\", \"args\": {}},\n\t\t{\"source\": \"exchange1\", \"exchange\": \"exchange2\", \"pattern\": \"error\"},\n\t\t{\"source\": \"exchange2\", \"queue\": \"queue2\"}\n\t]\n}"
+    },
+    {
+        "id": "c1cdb8f.6df0748",
+        "type": "switch",
+        "z": "ba438512.f81158",
+        "name": "Event Switch",
+        "property": "EventName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "TestEvent",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "UserCreatedEvent",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "UserDeletedEvent",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nodered-test-event",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "nodered-test-event2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 350,
+        "y": 380,
+        "wires": [
+            [
+                "2989a71a.bb5b98"
+            ],
+            [
+                "12288fdc.99fd7"
+            ],
+            [
+                "2d534d23.b5c4c2"
+            ],
+            [
+                "d0f9a2da.d7f36"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2989a71a.bb5b98",
+        "type": "debug",
+        "z": "ba438512.f81158",
+        "name": "TestEvent",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 600,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "2d534d23.b5c4c2",
+        "type": "debug",
+        "z": "ba438512.f81158",
+        "name": "UserDeletedEvent",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 630,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4f4e74e4.c025dc",
+        "type": "amqp2 in",
+        "z": "5121259d.060a7c",
+        "name": "RabbitMQ Receive",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "",
+        "server": "ace5dba8.4296a8",
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "41dcc467.9fab8c"
+            ]
+        ]
+    },
+    {
+        "id": "60a47fcf.01159",
+        "type": "inject",
+        "z": "5121259d.060a7c",
+        "name": "rabbitmq bağlantı bilgileri open",
+        "topic": "",
+        "payload": "{\"readFrom\":\"nodered\",\"topology\":{\"queues\":[{\"name\":\"nodered\",\"options\":{\"durable\":true}}]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "e3566292.80c4c"
+            ]
+        ]
+    },
+    {
+        "id": "e3566292.80c4c",
+        "type": "function",
+        "z": "5121259d.060a7c",
+        "name": "template",
+        "func": "\nreturn msg.payload;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "4f4e74e4.c025dc",
+                "2f44a6ae.6d237a"
+            ]
+        ],
+        "icon": "node-red/template.png"
+    },
+    {
+        "id": "e737419d.5bad2",
+        "type": "debug",
+        "z": "5121259d.060a7c",
+        "name": "bağlantı bilgileri debug console ",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 690,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "76e4433.d0621bc",
+        "type": "subflow:5121259d.060a7c",
+        "z": "ba438512.f81158",
+        "name": "",
+        "x": 120,
+        "y": 380,
+        "wires": [
+            [
+                "c1cdb8f.6df0748",
+                "d8c8ef1d.9c0d6"
+            ]
+        ]
+    },
+    {
+        "id": "2f44a6ae.6d237a",
+        "type": "function",
+        "z": "5121259d.060a7c",
+        "name": "",
+        "func": "\nvar temp = {\n    baslik :\"RabbitMQ Bağlantı Bilgileri\",\n    bilgiler :msg\n};\nreturn temp;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 160,
+        "wires": [
+            [
+                "e737419d.5bad2"
+            ]
+        ]
+    },
+    {
+        "id": "d0f9a2da.d7f36",
+        "type": "debug",
+        "z": "ba438512.f81158",
+        "name": "nodered-test-event",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 630,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "55c9516f.a4247",
+        "type": "amqp2 out",
+        "z": "fb92eec7.a6caf",
+        "name": "RabbitMQ Publish",
+        "iotype": "4",
+        "ioname": "nodered",
+        "server": "ace5dba8.4296a8",
+        "x": 650,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9290058c.38f9e8",
+        "type": "subflow:fb92eec7.a6caf",
+        "z": "ba438512.f81158",
+        "name": "",
+        "x": 450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "518ee064.bbb48",
+        "type": "inject",
+        "z": "ba438512.f81158",
+        "name": "nodered-test-event",
+        "topic": "",
+        "payload": "{\"EventName\":\"nodered-test-event\",\"EventData\":\"TEST\"}",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "9290058c.38f9e8"
+            ]
+        ]
+    },
+    {
+        "id": "4cf4af08.4c93c",
+        "type": "inject",
+        "z": "ba438512.f81158",
+        "name": "UserCreatedEvent",
+        "topic": "",
+        "payload": "{\"EventName\":\"UserCreatedEvent\",\"EventData\":{\"userid\":1,\"userTc\":\"1425632456\"}}",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "9290058c.38f9e8"
+            ]
+        ]
+    },
+    {
+        "id": "4c3fad3.84b5254",
+        "type": "debug",
+        "z": "47f246e3.953dc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 390,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "cd0d0756.7821b8",
+        "type": "template",
+        "z": "47f246e3.953dc8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "UserCreatedEvent received.\nemail created for user ",
+        "output": "str",
+        "x": 220,
+        "y": 100,
+        "wires": [
+            [
+                "4c3fad3.84b5254"
+            ]
+        ]
+    },
+    {
+        "id": "f4ca31d8.03f8e",
+        "type": "subflow:47f246e3.953dc8",
+        "z": "9000c3ab.2a8f7",
+        "name": "",
+        "x": 390,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5df1923d.cc3eac",
+        "type": "debug",
+        "z": "2886c7c3.6807c8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4a7b2a7a.fe4d54",
+        "type": "template",
+        "z": "2886c7c3.6807c8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "UserCreatedEvent received.\nUser information loaded from api.",
+        "output": "str",
+        "x": 280,
+        "y": 140,
+        "wires": [
+            [
+                "5df1923d.cc3eac"
+            ]
+        ]
+    },
+    {
+        "id": "12288fdc.99fd7",
+        "type": "subflow:9000c3ab.2a8f7",
+        "z": "ba438512.f81158",
+        "name": "",
+        "x": 640,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "9838cf77.97bd1",
+        "type": "subflow:2886c7c3.6807c8",
+        "z": "9000c3ab.2a8f7",
+        "name": "",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "54687ad4.792354",
+        "type": "function",
+        "z": "5121259d.060a7c",
+        "name": "parse",
+        "func": "var e = {\n    EventName:msg.payload.EventName,\n    EventData:msg.payload.EventData,\n    Info:\"Bu mesaj \"+msg.payload.EventName+\" eventi ile yakalanmıştır\"\n};\nreturn e;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41dcc467.9fab8c",
+        "type": "json",
+        "z": "5121259d.060a7c",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "54687ad4.792354"
+            ]
+        ]
+    },
+    {
+        "id": "d8c8ef1d.9c0d6",
+        "type": "debug",
+        "z": "ba438512.f81158",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 240,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a40efbc6.803b48",
+        "type": "debug",
+        "z": "fb92eec7.a6caf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 470,
+        "y": 140,
+        "wires": []
+    }
+]

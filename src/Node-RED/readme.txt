@@ -1,0 +1,1 @@
+node-red uses amqp2 node to connect rabbitmq . If you get an error, import amqp2 to your node-red
