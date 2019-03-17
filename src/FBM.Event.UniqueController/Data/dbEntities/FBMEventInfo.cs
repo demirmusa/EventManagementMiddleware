@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FBM.Event.UniqueController.Data.dbEntities
 {
-    internal class FBMEventInfo
+    public class FBMEventInfo
     {
         public int ID { get; set; }
         public string EventName { get; set; }

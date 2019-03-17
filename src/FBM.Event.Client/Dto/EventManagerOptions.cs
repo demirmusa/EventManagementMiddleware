@@ -10,11 +10,10 @@ namespace FBM.Event.Client.Dto
         /// you cant change it if you already use EventManager.RegisteredEvents key in your memory cache
         /// </summary>
         public string RegisteredEventsMemoryCacheKey { get; set; }
-        public string EventApiServerAddress { get; set; }
         /// <summary>
-        ///false = Close checking whether event is unique by parameters <para>true = Check event on server (whether it is unique and its properties are same with registered one) </para>
+        /// do not allow to send multiple event with same name, all event will be checked by property and name
         /// </summary>
-        public bool CheckEventOnServer { get; set; } = true;
+        public bool CheckIsEventUnique { get; set; } = true;
         public int CacheExpireTimeMinute { get; set; } = 30;
     }
 }

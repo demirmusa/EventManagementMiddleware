@@ -2,7 +2,7 @@
 
 namespace FBM.Event.UniqueController.Data.dbEntities
 {
-    internal class UniqueControllerDbContext : DbContext
+    public class UniqueControllerDbContext : DbContext
     {      
         public UniqueControllerDbContext(DbContextOptions options)
           : base(options)
