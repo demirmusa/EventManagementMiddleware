@@ -68,10 +68,10 @@ namespace EventManager.Core
                 return await LoadAllRegisteredEventsAsync();
 
         }
-        private async Task CheckEventAsync<T>(EMEvent<T> fBMEvent, string eventName)
+        private async Task CheckEventAsync<T>(EMEvent<T> eMEvent, string eventName)
             where T : IEMEvent
         {
-            var propJson = _eventChecker.GeneretePropertiesJson(fBMEvent.EventData);
+            var propJson = _eventChecker.GeneretePropertiesJson(eMEvent.EventData);
             var dict = GetAllEventsDic();
 
             if (dict.ContainsKey(eventName))
@@ -83,7 +83,7 @@ namespace EventManager.Core
             }
             else
             {
-                await GetEventFromStorageAsync(fBMEvent, dict);
+                await GetEventFromStorageAsync(eMEvent, dict);
                 if (dict[eventName].EventPropertiesJson == propJson)
                     return;// its ok do nothing                
                 else
@@ -91,12 +91,12 @@ namespace EventManager.Core
 
             }
         }
-        private async Task GetEventFromStorageAsync<T>(EMEvent<T> fBMEvent, Dictionary<string, EMEventInfoDto> checkedAndCachedEventsDic = null)
+        private async Task GetEventFromStorageAsync<T>(EMEvent<T> eMEvent, Dictionary<string, EMEventInfoDto> checkedAndCachedEventsDic = null)
             where T : IEMEvent
         {
             try
             {
-                var check = await _eventChecker.CheckOrAddEMEventInfoAsync(fBMEvent);
+                var check = await _eventChecker.CheckOrAddEMEventInfoAsync(eMEvent);
                 if (check != null && checkedAndCachedEventsDic != null)
                 {
                     checkedAndCachedEventsDic.Add(check.EventName, check);
@@ -160,10 +160,10 @@ namespace EventManager.Core
                 return LoadAllRegisteredEvents();
 
         }
-        private void CheckEvent<T>(EMEvent<T> fBMEvent, string eventName)
+        private void CheckEvent<T>(EMEvent<T> eMEvent, string eventName)
         where T : IEMEvent
         {
-            var propJson = _eventChecker.GeneretePropertiesJson(fBMEvent.EventData);
+            var propJson = _eventChecker.GeneretePropertiesJson(eMEvent.EventData);
             var dict = GetAllEventsDic();
 
             if (dict.ContainsKey(eventName))
@@ -175,7 +175,7 @@ namespace EventManager.Core
             }
             else
             {
-                GetEventFromStorage(fBMEvent, dict);
+                GetEventFromStorage(eMEvent, dict);
                 if (dict[eventName].EventPropertiesJson == propJson)
                     return;// its ok do nothing                
                 else
@@ -183,12 +183,12 @@ namespace EventManager.Core
 
             }
         }
-        private void GetEventFromStorage<T>(EMEvent<T> fBMEvent, Dictionary<string, EMEventInfoDto> checkedAndCachedEventsDic = null)
+        private void GetEventFromStorage<T>(EMEvent<T> eMEvent, Dictionary<string, EMEventInfoDto> checkedAndCachedEventsDic = null)
           where T : IEMEvent
         {
             try
             {
-                var check = _eventChecker.CheckOrAddEMEventInfo(fBMEvent);
+                var check = _eventChecker.CheckOrAddEMEventInfo(eMEvent);
                 if (check != null && checkedAndCachedEventsDic != null)
                 {
                     checkedAndCachedEventsDic.Add(check.EventName, check);

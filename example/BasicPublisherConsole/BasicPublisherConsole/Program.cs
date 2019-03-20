@@ -22,17 +22,8 @@ namespace BasicPublisherConsole
             var services = new ServiceCollection();
 
             services.AddEMDefaultManager(
-               eventOptions =>
-               {
-                   eventOptions.CheckIsEventUnique = true;
-                   eventOptions.CacheExpireTimeMinute = 30;
-                   //eventOptions.RegisteredEventsMemoryCacheKey = "";
-               },
-               checkerOptions =>
-               {
-                   checkerOptions.UseSQL(sql => sql.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=eventDB;trusted_connection=yes;"));
-                   //checkerOptions.UseWebApi()
-               });
+               checkerOptions => checkerOptions.UseSQL(sql => 
+               sql.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=eventDB;trusted_connection=yes;")));
 
             var provider = services.BuildServiceProvider();
 

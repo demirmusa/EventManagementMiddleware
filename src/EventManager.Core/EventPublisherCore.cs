@@ -20,12 +20,12 @@ namespace EventManager.Core
             _eventManager = eventManager;
         }
 
-        public void Publish<T>(T nodeEvent) where T : IEMEvent
+        public void Publish<T>(T eMEvent) where T : IEMEvent
         {
-            EMEvent<T> fbmNodeEvent;
+            EMEvent<T> nodeEvent;
             try
             {
-                fbmNodeEvent = _eventManager.GetEvent(nodeEvent);
+                nodeEvent = _eventManager.GetEvent(eMEvent);
             }
             catch (Exception e)
             {
@@ -35,7 +35,7 @@ namespace EventManager.Core
             string msgStr = "";
             try
             {
-                msgStr = Newtonsoft.Json.JsonConvert.SerializeObject(fbmNodeEvent);
+                msgStr = Newtonsoft.Json.JsonConvert.SerializeObject(nodeEvent);
             }
             catch (Exception e)
             {
@@ -53,12 +53,12 @@ namespace EventManager.Core
             }
         }
 
-        public async Task PublishAsync<T>(T nodeEvent) where T : IEMEvent
+        public async Task PublishAsync<T>(T eMEvent) where T : IEMEvent
         {
-            EMEvent<T> fbmNodeEvent;
+            EMEvent<T> nodeEvent;
             try
             {
-                fbmNodeEvent = await _eventManager.GetEventAsync(nodeEvent);
+                nodeEvent = await _eventManager.GetEventAsync(eMEvent);
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace EventManager.Core
             string msgStr = "";
             try
             {
-                msgStr = Newtonsoft.Json.JsonConvert.SerializeObject(fbmNodeEvent);
+                msgStr = Newtonsoft.Json.JsonConvert.SerializeObject(nodeEvent);
             }
             catch (Exception e)
             {

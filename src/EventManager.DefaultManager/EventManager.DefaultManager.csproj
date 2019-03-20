@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>musademir</Authors>
     <Product>EventManagerMiddleware</Product>
+    <Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

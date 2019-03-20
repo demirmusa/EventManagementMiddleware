@@ -14,15 +14,15 @@ namespace EventManager.EventChecker.Extensions
 
             return opt;
         }
+        //TODO: implement web api
+        //public static EventCheckerOptions UseWebApi(this EventCheckerOptions opt, Action<WebApiOptions> webApiOptionsAction)
+        //{
+        //    opt.UseSQL = false;
 
-        public static EventCheckerOptions UseWebApi(this EventCheckerOptions opt, Action<WebApiOptions> webApiOptionsAction)
-        {
-            opt.UseSQL = false;
+        //    opt.UseWebApi = true;
+        //    opt.WebApiOptions = webApiOptionsAction;
 
-            opt.UseWebApi = true;
-            opt.WebApiOptions = webApiOptionsAction;
-
-            return opt;
-        }
+        //    return opt;
+        //}
     }
 }

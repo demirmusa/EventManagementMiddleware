@@ -11,7 +11,7 @@ using System;
 namespace EventManager.DefaultManager.Extensions
 {
     public static class EMDefaultManagerDIExtensions
-    {    
+    {
         /// <summary>
         /// Adds default cache manager (which use Memory cache. That's why you have to add memory cache to your project.), default rabbitmq publisher.
         /// <para>If you dont want to use them create your own one and inject them</para>
@@ -19,14 +19,14 @@ namespace EventManager.DefaultManager.Extensions
         /// <param name="collection"></param>
         /// <param name="eventManagerOptions"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEMDefaultManager(this IServiceCollection collection, 
-            Action<EventManagerOptions> eventManagerOptions,
-            Action<EventCheckerOptions> eventCheckerOptionsAction)
+        public static IServiceCollection AddEMDefaultManager(this IServiceCollection collection,
+             Action<EventCheckerOptions> eventCheckerOptionsAction,
+             Action<EventManagerOptions> eventManagerOptions = null)
         {
             collection.AddSingleton<ICacheManager, DefaultCacheManager>();
             collection.AddSingleton<IDefaultRabbitMQPublisher, DefaultRabbitMQPublisher>();
 
-            collection.AddEventManagerCore<IDefaultRabbitMQPublisher, ICacheManager>(eventManagerOptions,eventCheckerOptionsAction);
+            collection.AddEventManagerCore<IDefaultRabbitMQPublisher, ICacheManager>(eventCheckerOptionsAction, eventManagerOptions);
             return collection;
         }
 
@@ -65,7 +65,7 @@ namespace EventManager.DefaultManager.Extensions
             });
             return provider;
         }
-        public static IServiceProvider InitializeEMDefaultManager(this IServiceProvider provider, 
+        public static IServiceProvider InitializeEMDefaultManager(this IServiceProvider provider,
             Action<ConnectionFactory> connectionFactory,
             Action<RabbitMQQueueInfoDto> queueInfoAction)
         {

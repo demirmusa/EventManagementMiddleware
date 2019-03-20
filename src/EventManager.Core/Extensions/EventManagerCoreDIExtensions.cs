@@ -12,12 +12,13 @@ namespace EventManager.Core.Extensions
     public static class EventManagerCoreDIExtensions
     {
         public static IServiceCollection AddEventManagerCore<TPublisher, TCacheManager>(this IServiceCollection collection,
-            Action<EventManagerOptions> eventManagerOptionsAction,
-            Action<EventCheckerOptions> eventCheckerOptionsAction)
+            Action<EventCheckerOptions> eventCheckerOptionsAction,
+            Action<EventManagerOptions> eventManagerOptionsAction = null
+            )
             where TPublisher : IMessagePublisher
             where TCacheManager : ICacheManager
         {
-            collection.Configure(eventManagerOptionsAction);
+            collection.Configure(eventManagerOptionsAction ?? (x => { }));
 
             collection.AddTransient<IEventManagerCore, EventManagerCore<TCacheManager>>();
             collection.AddTransient<IEMPublisher, EventPublisherCore<TPublisher>>();
