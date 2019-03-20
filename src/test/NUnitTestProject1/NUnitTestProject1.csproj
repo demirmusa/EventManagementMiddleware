@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FBM.Event.Client\FBM.Event.Client.csproj" />
-    <ProjectReference Include="..\FBM.Event.DefaultManager\FBM.Event.DefaultManager.csproj" />
-    <ProjectReference Include="..\FBM.Event.Shared\FBM.Event.Shared.csproj" />
-    <ProjectReference Include="..\FBM.Event.UniqueController\FBM.Event.UniqueController.csproj" />
+    <ProjectReference Include="..\..\EventManager.DefaultManager\EventManager.DefaultManager.csproj" />
   </ItemGroup>
 
 </Project>

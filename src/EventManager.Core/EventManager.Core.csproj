@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>musademir</Authors>
+    <Product>EventManagerMiddleware</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FBM.Event.Shared\FBM.Event.Shared.csproj" />
-    <ProjectReference Include="..\FBM.Event.UniqueController\FBM.Event.UniqueController.csproj" />
+    <ProjectReference Include="..\EventManager.EventChecker\EventManager.EventChecker.csproj" />
+    <ProjectReference Include="..\EventManager.Shared\EventManager.Shared.csproj" />
   </ItemGroup>
 
 </Project>

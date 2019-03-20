@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>musademir</Authors>
+    <Company>musademir</Company>
+    <Product>EventManagerMiddleware</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FBM.Event.Shared\FBM.Event.Shared.csproj" />
+    <ProjectReference Include="..\EventManager.Shared\EventManager.Shared.csproj" />
   </ItemGroup>
 
 </Project>
