@@ -1,19 +1,16 @@
-﻿using FBM.Event.Shared.Dto;
-using FBM.Event.Shared.interfaces;
-using FBM.Event.UniqueController.Data.dbEntities;
-using FBM.Event.UniqueController.Dto;
-using System;
+﻿
+using EventManager.Shared.Dto;
+using EventManager.Shared.interfaces;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FBM.Event.UniqueController.interfaces
+namespace EventManager.EventChecker.interfaces
 {
     public interface IEventChecker
     {
-        Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync();
-        List<FBMEventInfoDto> GetAllRegisteredEvents();
-        Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent;
-        string GeneretePropertiesJson<T>(T data) where T : IFBMEvent;
+        Task<List<EMEventInfoDto>> GetAllRegisteredEventsAsync();
+        List<EMEventInfoDto> GetAllRegisteredEvents();
+        Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent;
+        string GeneretePropertiesJson<T>(T data) where T : IEMEvent;
     }
 }

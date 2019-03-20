@@ -1,38 +1,36 @@
-﻿using FBM.Event.Shared.Dto;
-using FBM.Event.Shared.interfaces;
-using FBM.Event.UniqueController.Data.dbEntities;
-using FBM.Event.UniqueController.Dto;
-using FBM.Event.UniqueController.interfaces;
+﻿using EventManager.EventChecker.interfaces;
+using EventManager.Shared.Dto;
+using EventManager.Shared.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FBM.Event.UniqueController
+namespace EventManager.EventChecker
 {
     /// <summary>
     /// this is an event checker which use web api to check event info
     /// </summary>
     public class WebApiEventChecker : IEventChecker
     {
-        public Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent
+        public Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
         {
             throw new NotImplementedException();
         }
 
-        public string GeneretePropertiesJson<T>(T data) where T : IFBMEvent
+        public string GeneretePropertiesJson<T>(T data) where T : IEMEvent
         {
             throw new NotImplementedException();
         }
 
      
 
-        public Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync()
+        public Task<List<EMEventInfoDto>> GetAllRegisteredEventsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public List<FBMEventInfoDto> GetAllRegisteredEvents()
+        public List<EMEventInfoDto> GetAllRegisteredEvents()
         {
             throw new NotImplementedException();
         }

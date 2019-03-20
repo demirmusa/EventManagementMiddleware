@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FBM.Event.UniqueController.Dto
+namespace EventManager.EventChecker.Dto
 {
     public class EventCheckerOptions
     {

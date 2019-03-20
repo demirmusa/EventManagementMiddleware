@@ -1,24 +1,21 @@
-﻿using FBM.Event.Client;
-using FBM.Event.Shared.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EventManager.Core;
+using EventManager.Shared.interfaces;
 
 namespace NUnitTestProject1.dto
 {
-    class TestEvent : IFBMEvent
+    class TestEvent : IEMEvent
     {
         public string TestProp { get; set; }
     }
 
-    [FBMEventInfo(eventName: "UserCreatedEvent")]
-    class TestEvent2 : IFBMEvent
+    [EMEventInfo(eventName: "UserCreatedEvent")]
+    class TestEvent2 : IEMEvent
     {
         public int userid { get; set; }
         public string userTc { get; set; }
     }
-    [FBMEventInfo(eventName: "UserDeletedEvent")]
-    class MyEventClass : IFBMEvent
+    [EMEventInfo(eventName: "UserDeletedEvent")]
+    class MyEventClass : IEMEvent
     {
         public int id { get; set; }
         public string username { get; set; }

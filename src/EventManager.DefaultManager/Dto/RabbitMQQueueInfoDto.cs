@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FBM.Event.DefaultManager.Dto
+﻿using System.Collections.Generic;
+namespace EventManager.DefaultManager.Dto
 {
-    public class QueueInfoDto
+    public class RabbitMQQueueInfoDto
     {
         public string QueueName { get; set; } = "nodered";
         public bool Durable { get; set; } = true;

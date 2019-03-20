@@ -1,25 +1,23 @@
-using FBM.Event.Client.interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using FBM.Event.DefaultManager.Extensions;
 using Microsoft.EntityFrameworkCore;
-using FBM.Event.UniqueController.Extensions;
 using NUnitTestProject1.dto;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-
+using EventManager.Core.interfaces;
+using EventManager.DefaultManager.Extensions;
+using EventManager.EventChecker.Extensions;
 namespace Tests
 {
     public class EventPublishTest
     {
-        IEventPublisher _eventPublisher;
+        IEMPublisher _eventPublisher;
         [SetUp]
         public void Setup()
         {
             var services = new ServiceCollection();
 
-            services.AddFBMEventClientWithDefaultManager(
+            services.AddEMDefaultManager(
                eventOptions =>
                {
                    eventOptions.CheckIsEventUnique = true;
@@ -32,8 +30,8 @@ namespace Tests
                });
 
             var provider = services.BuildServiceProvider();
-            provider.InitializeFBMEventClientDefaultManager("localhost");
-            _eventPublisher = provider.GetService<IEventPublisher>();
+            provider.InitializeEMDefaultManager("localhost");
+            _eventPublisher = provider.GetService<IEMPublisher>();
 
         }
 

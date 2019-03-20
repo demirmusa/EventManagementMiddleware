@@ -1,17 +1,17 @@
-﻿using FBM.Event.Client.Dto;
-using FBM.Event.Client.interfaces;
-using FBM.Event.UniqueController.Dto;
-using FBM.Event.UniqueController.Extensions;
+﻿using EventManager.Core.Dto;
+using EventManager.Core.interfaces;
+using EventManager.EventChecker.Dto;
+using EventManager.EventChecker.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FBM.Event.Client.Extensions
+namespace EventManager.Core.Extensions
 {
-    public static class FBMEventClientDIExtensions
+    public static class EventManagerCoreDIExtensions
     {
-        public static IServiceCollection AddFBMEventClient<TPublisher, TCacheManager>(this IServiceCollection collection,
+        public static IServiceCollection AddEventManagerCore<TPublisher, TCacheManager>(this IServiceCollection collection,
             Action<EventManagerOptions> eventManagerOptionsAction,
             Action<EventCheckerOptions> eventCheckerOptionsAction)
             where TPublisher : IMessagePublisher
@@ -19,8 +19,8 @@ namespace FBM.Event.Client.Extensions
         {
             collection.Configure(eventManagerOptionsAction);
 
-            collection.AddTransient<IEventManager, EventManager<TCacheManager>>();
-            collection.AddTransient<IEventPublisher, EventPublisher<TPublisher>>();
+            collection.AddTransient<IEventManagerCore, EventManagerCore<TCacheManager>>();
+            collection.AddTransient<IEMPublisher, EventPublisherCore<TPublisher>>();
 
             collection.AddEventChecker(eventCheckerOptionsAction);
 

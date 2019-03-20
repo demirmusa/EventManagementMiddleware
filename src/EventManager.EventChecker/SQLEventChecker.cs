@@ -1,51 +1,49 @@
-﻿using FBM.Event.Shared.Dto;
-using FBM.Event.Shared.interfaces;
-using FBM.Event.UniqueController.Data.dbEntities;
-using FBM.Event.UniqueController.Dto;
-using FBM.Event.UniqueController.Exceptions;
-using FBM.Event.UniqueController.interfaces;
+﻿using EventManager.EventChecker.Data.dbEntities;
+using EventManager.EventChecker.Exceptions;
+using EventManager.EventChecker.interfaces;
+using EventManager.Shared.Dto;
+using EventManager.Shared.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FBM.Event.UniqueController
+namespace EventManager.EventChecker
 {
     /// <summary>
     /// this is an event checker which use sql server to check event
     /// </summary>
     public class SQLEventChecker : IEventChecker
     {
-        UniqueControllerDbContext _context;
-        public SQLEventChecker(UniqueControllerDbContext context)
+        EventCheckerDbContext _context;
+        public SQLEventChecker(EventCheckerDbContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();
         }
 
-        public async Task<List<FBMEventInfoDto>> GetAllRegisteredEventsAsync()
+        public async Task<List<EMEventInfoDto>> GetAllRegisteredEventsAsync()
         {
-            return await _context.FBMEventInfos.Select(x => new FBMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
+            return await _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
         }
-        public List<FBMEventInfoDto> GetAllRegisteredEvents()
+        public List<EMEventInfoDto> GetAllRegisteredEvents()
         {
-            return _context.FBMEventInfos.Select(x => new FBMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
+            return _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
         }
-        public async Task<FBMEventInfoDto> CheckOrAddFBMEventInfo<T>(FBMEvent<T> data) where T : IFBMEvent
+        public async Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
         {
             var propertiesJson = GeneretePropertiesJson(data.EventData);
 
             //if event exist
-            if (await _context.FBMEventInfos.AnyAsync(x => x.EventName == data.EventName))
+            if (await _context.EMEventInfos.AnyAsync(x => x.EventName == data.EventName))
             {
-                var dbResult = await _context.FBMEventInfos.FirstOrDefaultAsync(x => x.EventName == data.EventName);
+                var dbResult = await _context.EMEventInfos.FirstOrDefaultAsync(x => x.EventName == data.EventName);
                 if (dbResult.EventPropertiesJson != propertiesJson)//if event has different properties .Throw Exception
-                    throw new FBMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
+                    throw new EMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
                         $" Registered properties: {dbResult.EventPropertiesJson}");
 
-                return new FBMEventInfoDto
+                return new EMEventInfoDto
                 {
                     EventName = dbResult.EventName,
                     EventPropertiesJson = dbResult.EventPropertiesJson
@@ -53,7 +51,7 @@ namespace FBM.Event.UniqueController
             }
             else // event not exist. Create it
             {
-                var eventInfo = new FBMEventInfo
+                var eventInfo = new EMEventInfo
                 {
                     CreationTime = DateTime.Now,
                     //TODO: Change it
@@ -61,16 +59,16 @@ namespace FBM.Event.UniqueController
                     EventName = data.EventName,
                     EventPropertiesJson = propertiesJson
                 };
-                await _context.FBMEventInfos.AddAsync(eventInfo);
+                await _context.EMEventInfos.AddAsync(eventInfo);
                 await _context.SaveChangesAsync();
-                return new FBMEventInfoDto
+                return new EMEventInfoDto
                 {
                     EventName = data.EventName,
                     EventPropertiesJson = propertiesJson
                 };
             }
         }
-        public string GeneretePropertiesJson<T>(T data) where T : IFBMEvent
+        public string GeneretePropertiesJson<T>(T data) where T : IEMEvent
         {
             Dictionary<string, string> propTypeNameDic = new Dictionary<string, string>();
             //get all properties of event 

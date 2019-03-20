@@ -1,11 +1,9 @@
-﻿using FBM.Event.UniqueController.Dto;
+﻿using EventManager.EventChecker.Dto;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FBM.Event.UniqueController.Extensions
+namespace EventManager.EventChecker.Extensions
 {
-    public static class UniqueControllerOptionsExtensions
+    public static class EventCheckerOptionsExtensions
     {
         public static EventCheckerOptions UseSQL(this EventCheckerOptions opt, Action<Microsoft.EntityFrameworkCore.DbContextOptionsBuilder> sqlOptionsAction)
         {

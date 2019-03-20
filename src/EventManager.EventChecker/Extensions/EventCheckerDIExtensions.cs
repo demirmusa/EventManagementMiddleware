@@ -1,15 +1,12 @@
-﻿using FBM.Event.UniqueController.Data.dbEntities;
-using FBM.Event.UniqueController.Dto;
-using FBM.Event.UniqueController.interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using EventManager.EventChecker.Data.dbEntities;
+using EventManager.EventChecker.Dto;
+using EventManager.EventChecker.interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FBM.Event.UniqueController.Extensions
+namespace EventManager.EventChecker.Extensions
 {
-    public static class EventUniqueControllerDIExtensions
+    public static class EventCheckerDIExtensions
     {
         public static IServiceCollection AddEventChecker(this IServiceCollection collection, Action<EventCheckerOptions> optionsAction)
         {
@@ -21,7 +18,7 @@ namespace FBM.Event.UniqueController.Extensions
                 if (options.SqlOptions == null)
                     throw new Exception("Define SQLOptions to use sql");
 
-                collection.AddDbContext<UniqueControllerDbContext>(options.SqlOptions);
+                collection.AddDbContext<EventCheckerDbContext>(options.SqlOptions);
                 collection.AddTransient<IEventChecker, SQLEventChecker>();
             }
             else if (options.UseWebApi)

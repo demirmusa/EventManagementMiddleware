@@ -1,10 +1,10 @@
-﻿using FBM.Event.DefaultManager.Dto;
-using FBM.Event.DefaultManager.interfaces;
+﻿using EventManager.DefaultManager.Dto;
+using EventManager.DefaultManager.interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Text;
 
-namespace FBM.Event.DefaultManager
+namespace EventManager.DefaultManager
 {
     /// <summary>
     /// Default rabbitmq publisher. Puslish message to rabbitmq queue which your node-red connected.
@@ -13,7 +13,7 @@ namespace FBM.Event.DefaultManager
     {
         protected ConnectionFactory _rabbitMqConnectionFactory;
 
-        protected QueueInfoDto _queueInfoDto;
+        protected RabbitMQQueueInfoDto _queueInfoDto;
 
         /// <summary>
         /// Connection factory for rabbitmq which your nodered connected
@@ -24,7 +24,7 @@ namespace FBM.Event.DefaultManager
         /// <summary>
         /// RabbitMq queue which nodered connected and used. Init queue info at once.than QueueDeclare function will use these parameters
         /// </summary>
-        public virtual void InitQueueInfo(QueueInfoDto queueInfoDto) => _queueInfoDto = queueInfoDto;
+        public virtual void InitQueueInfo(RabbitMQQueueInfoDto queueInfoDto) => _queueInfoDto = queueInfoDto;
 
         /// <summary>
         /// define (RabbitMQ.Client.IModel)channel.QueueDeclare()

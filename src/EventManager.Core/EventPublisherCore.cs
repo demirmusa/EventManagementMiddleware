@@ -1,32 +1,29 @@
-﻿using FBM.Event.Client.Dto;
-using FBM.Event.Client.interfaces;
-using FBM.Event.Shared.Dto;
-using FBM.Event.Shared.interfaces;
+﻿using EventManager.Core.interfaces;
+using EventManager.Shared.Dto;
+using EventManager.Shared.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FBM.Event.Client
+namespace EventManager.Core
 {
     /// <summary>
     /// this use TPublisher , inject it to dependency injection and initialize it before use call publish method
     /// inject this as a singleteon
     /// </summary>
-    public class EventPublisher<TPublisher> : IEventPublisher where TPublisher : IMessagePublisher
+    public class EventPublisherCore<TPublisher> : IEMPublisher where TPublisher : IMessagePublisher
     {
-        IEventManager _eventManager;
+        IEventManagerCore _eventManager;
         TPublisher _genericPublisher;
-        public EventPublisher(TPublisher genericPublisher, IEventManager eventManager)
+        public EventPublisherCore(TPublisher genericPublisher, IEventManagerCore eventManager)
         {
             _genericPublisher = genericPublisher;
             _eventManager = eventManager;
         }
 
 
-        public async Task PublishAsync<T>(T nodeEvent) where T : IFBMEvent
+        public async Task PublishAsync<T>(T nodeEvent) where T : IEMEvent
         {
-            FBMEvent<T> fbmNodeEvent;
+            EMEvent<T> fbmNodeEvent;
             try
             {
                 fbmNodeEvent = await _eventManager.GetEventAsync(nodeEvent);

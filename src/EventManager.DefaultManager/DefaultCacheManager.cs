@@ -1,9 +1,7 @@
-﻿using FBM.Event.Client.interfaces;
+﻿using EventManager.Core.interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.Text;
-
-namespace FBM.Event.DefaultManager
+namespace EventManager.DefaultManager
 {
     /// <summary>
     /// default cache manager for event client.Its uses memory caching.

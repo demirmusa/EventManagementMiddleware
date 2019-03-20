@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FBM.Event.UniqueController.Data.dbEntities
+namespace EventManager.EventChecker.Data.dbEntities
 {
-    public class FBMEventInfo
+    public class EMEventInfo
     {
         public int ID { get; set; }
         public string EventName { get; set; }

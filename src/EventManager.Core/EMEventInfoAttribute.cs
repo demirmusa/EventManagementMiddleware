@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FBM.Event.Client
+namespace EventManager.Core
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class FBMEventInfoAttribute : Attribute
+    public class EMEventInfoAttribute : Attribute
     {
         public string EventName { get; private set; }
-        public FBMEventInfoAttribute(string eventName)
+        public EMEventInfoAttribute(string eventName)
         {
             EventName = eventName;
         }
