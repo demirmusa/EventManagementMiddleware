@@ -20,6 +20,38 @@ namespace EventManager.Core
             _eventManager = eventManager;
         }
 
+        public void Publish<T>(T nodeEvent) where T : IEMEvent
+        {
+            EMEvent<T> fbmNodeEvent;
+            try
+            {
+                fbmNodeEvent = _eventManager.GetEvent(nodeEvent);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error while event info. For more information see inner exception", e);
+            }
+
+            string msgStr = "";
+            try
+            {
+                msgStr = Newtonsoft.Json.JsonConvert.SerializeObject(fbmNodeEvent);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error while serializing object to json. For more information see inner exception", e);
+            }
+
+
+            try
+            {
+                _genericPublisher.Publish(msgStr);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error while publishing message. For more information see inner exception", e);
+            }
+        }
 
         public async Task PublishAsync<T>(T nodeEvent) where T : IEMEvent
         {
@@ -46,7 +78,7 @@ namespace EventManager.Core
 
             try
             {
-                _genericPublisher.Publish(msgStr);
+                await _genericPublisher.PublishAsync(msgStr);
             }
             catch (Exception e)
             {

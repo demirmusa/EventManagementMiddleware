@@ -13,11 +13,7 @@ namespace EventManager.EventChecker
     /// </summary>
     public class WebApiEventChecker : IEventChecker
     {
-        public Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public string GeneretePropertiesJson<T>(T data) where T : IEMEvent
         {
             throw new NotImplementedException();
@@ -31,6 +27,16 @@ namespace EventManager.EventChecker
         }
 
         public List<EMEventInfoDto> GetAllRegisteredEvents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EMEventInfoDto> CheckOrAddEMEventInfoAsync<T>(EMEvent<T> data) where T : IEMEvent
+        {
+            throw new NotImplementedException();
+        }
+
+        public EMEventInfoDto CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
         {
             throw new NotImplementedException();
         }

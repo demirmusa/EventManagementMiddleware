@@ -6,5 +6,6 @@ namespace EventManager.Core.interfaces
     public interface IEMPublisher
     {
         Task PublishAsync<T>(T nodeEvent) where T : IEMEvent;
+        void Publish<T>(T nodeEvent) where T : IEMEvent;
     }
 }

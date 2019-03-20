@@ -9,8 +9,11 @@ namespace EventManager.EventChecker.interfaces
     public interface IEventChecker
     {
         Task<List<EMEventInfoDto>> GetAllRegisteredEventsAsync();
+        Task<EMEventInfoDto> CheckOrAddEMEventInfoAsync<T>(EMEvent<T> data) where T : IEMEvent;
+
         List<EMEventInfoDto> GetAllRegisteredEvents();
-        Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent;
+        EMEventInfoDto CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent;
+
         string GeneretePropertiesJson<T>(T data) where T : IEMEvent;
     }
 }

@@ -27,11 +27,7 @@ namespace EventManager.EventChecker
         {
             return await _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
         }
-        public List<EMEventInfoDto> GetAllRegisteredEvents()
-        {
-            return _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
-        }
-        public async Task<EMEventInfoDto> CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
+        public async Task<EMEventInfoDto> CheckOrAddEMEventInfoAsync<T>(EMEvent<T> data) where T : IEMEvent
         {
             var propertiesJson = GeneretePropertiesJson(data.EventData);
 
@@ -68,6 +64,51 @@ namespace EventManager.EventChecker
                 };
             }
         }
+
+
+        public List<EMEventInfoDto> GetAllRegisteredEvents()
+        {
+            return _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
+        }
+        public EMEventInfoDto CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
+        {
+            var propertiesJson = GeneretePropertiesJson(data.EventData);
+
+            //if event exist
+            if (_context.EMEventInfos.Any(x => x.EventName == data.EventName))
+            {
+                var dbResult = _context.EMEventInfos.FirstOrDefault(x => x.EventName == data.EventName);
+                if (dbResult.EventPropertiesJson != propertiesJson)//if event has different properties .Throw Exception
+                    throw new EMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
+                        $" Registered properties: {dbResult.EventPropertiesJson}");
+
+                return new EMEventInfoDto
+                {
+                    EventName = dbResult.EventName,
+                    EventPropertiesJson = dbResult.EventPropertiesJson
+                };// its ok. there is no problem. Return event info
+            }
+            else // event not exist. Create it
+            {
+                var eventInfo = new EMEventInfo
+                {
+                    CreationTime = DateTime.Now,
+                    //TODO: Change it
+                    CreatorClientName = "",
+                    EventName = data.EventName,
+                    EventPropertiesJson = propertiesJson
+                };
+                _context.EMEventInfos.Add(eventInfo);
+                _context.SaveChanges();
+                return new EMEventInfoDto
+                {
+                    EventName = data.EventName,
+                    EventPropertiesJson = propertiesJson
+                };
+            }
+        }
+
+
         public string GeneretePropertiesJson<T>(T data) where T : IEMEvent
         {
             Dictionary<string, string> propTypeNameDic = new Dictionary<string, string>();

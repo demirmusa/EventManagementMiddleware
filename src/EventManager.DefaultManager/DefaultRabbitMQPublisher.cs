@@ -3,6 +3,7 @@ using EventManager.DefaultManager.interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EventManager.DefaultManager
 {
@@ -86,5 +87,10 @@ namespace EventManager.DefaultManager
 
         }
 
+        public async Task PublishAsync(string message)
+        {
+            //create async rabbitmq publisher
+            Publish(message);
+        }
     }
 }

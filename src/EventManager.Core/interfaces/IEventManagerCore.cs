@@ -8,5 +8,6 @@ namespace EventManager.Core.interfaces
     {
         //EMEvent<T> GetEvent<T>(T e) where T : IEMEvent;
         Task<EMEvent<T>> GetEventAsync<T>(T e) where T : IEMEvent;
+        EMEvent<T> GetEvent<T>(T e) where T : IEMEvent;
     }
 }
