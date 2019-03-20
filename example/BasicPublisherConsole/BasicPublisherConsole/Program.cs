@@ -1,14 +1,14 @@
 ﻿/*
  Created By Musa Demir.
  */
-using FBM.Event.DefaultManager.Extensions;
-using FBM.Event.UniqueController.Extensions;
+using EventManager.Core;
+using EventManager.Core.interfaces;
+using EventManager.DefaultManager.Extensions;
+using EventManager.EventChecker.Extensions;
+using EventManager.Shared.interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using FBM.Event.Client.interfaces;
-using FBM.Event.Shared.interfaces;
-using FBM.Event.Client;
 using System.Threading.Tasks;
 /// <summary>
 /// This is a basic publisher console application. Node-red listens rabbitMq.
@@ -21,7 +21,7 @@ namespace BasicPublisherConsole
         {
             var services = new ServiceCollection();
 
-            services.AddFBMEventClientWithDefaultManager(
+            services.AddEMDefaultManager(
                eventOptions =>
                {
                    eventOptions.CheckIsEventUnique = true;
@@ -36,9 +36,9 @@ namespace BasicPublisherConsole
 
             var provider = services.BuildServiceProvider();
 
-            provider.InitializeFBMEventClientDefaultManager("localhost");
+            provider.InitializeEMDefaultManager("localhost");
 
-            var _eventPublisher = provider.GetService<IEventPublisher>();
+            var _eventPublisher = provider.GetService<IEMPublisher>();
 
             var key = ConsoleKey.Spacebar;
             int i = 0;
@@ -85,19 +85,19 @@ namespace BasicPublisherConsole
         }
     }
 
-    class TestEvent : IFBMEvent
+    class TestEvent : IEMEvent
     {
         public string TestProp { get; set; }
     }
 
-    [FBMEventInfo(eventName: "UserCreatedEvent")]
-    class TestEvent2 : IFBMEvent
+    [EMEventInfo(eventName: "UserCreatedEvent")]
+    class TestEvent2 : IEMEvent
     {
         public int userid { get; set; }
         public string userTc { get; set; }
     }
-    [FBMEventInfo(eventName: "UserDeletedEvent")]
-    class MyEventClass : IFBMEvent
+    [EMEventInfo(eventName: "UserDeletedEvent")]
+    class MyEventClass : IEMEvent
     {
         public int id { get; set; }
         public string username { get; set; }
