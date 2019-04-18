@@ -1,19 +1,15 @@
-﻿
-using EventManager.Shared.Dto;
-using EventManager.Shared.interfaces;
+﻿using EventManager.Shared.Dto;
+using EventManager.Shared.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace EventManager.EventChecker.interfaces
+namespace EventManager.EventChecker.Interfaces
 {
     public interface IEventChecker
     {
-        Task<List<EMEventInfoDto>> GetAllRegisteredEventsAsync();
-        Task<EMEventInfoDto> CheckOrAddEMEventInfoAsync<T>(EMEvent<T> data) where T : IEMEvent;
-
-        List<EMEventInfoDto> GetAllRegisteredEvents();
-        EMEventInfoDto CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent;
-
-        string GeneretePropertiesJson<T>(T data) where T : IEMEvent;
+        void CheckEvent<T>(EMEvent<T> eMEvent) where T : IEMEvent;
+        Task CheckEventAsync<T>(EMEvent<T> eMEvent) where T : IEMEvent;
     }
 }

@@ -1,8 +1,7 @@
-﻿using EventManager.EventChecker.Data.dbEntities;
-using EventManager.EventChecker.Exceptions;
-using EventManager.EventChecker.interfaces;
+﻿using EventManager.EventChecker.SQL.Data;
+using EventManager.EventChecker.SQL.Data.DbEntities;
 using EventManager.Shared.Dto;
-using EventManager.Shared.interfaces;
+using EventManager.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,10 +13,12 @@ namespace EventManager.EventChecker
     /// <summary>
     /// this is an event checker which use sql server to check event
     /// </summary>
-    public class SQLEventChecker : IEventChecker
+    public class SQLEventChecker : IEventInfoLoader
+
     {
         EventCheckerDbContext _context;
-        public SQLEventChecker(EventCheckerDbContext context)
+        public SQLEventChecker(
+            EventCheckerDbContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();
@@ -27,23 +28,18 @@ namespace EventManager.EventChecker
         {
             return await _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToListAsync();
         }
-        public async Task<EMEventInfoDto> CheckOrAddEMEventInfoAsync<T>(EMEvent<T> data) where T : IEMEvent
+        public async Task<EMEventInfoDto> GetOrAddEMEventInfoAsync<T>(EMEvent<T> data, string propertiesJson) where T : IEMEvent
         {
-            var propertiesJson = GeneretePropertiesJson(data.EventData);
-
             //if event exist
             if (await _context.EMEventInfos.AnyAsync(x => x.EventName == data.EventName))
             {
                 var dbResult = await _context.EMEventInfos.FirstOrDefaultAsync(x => x.EventName == data.EventName);
-                if (dbResult.EventPropertiesJson != propertiesJson)//if event has different properties .Throw Exception
-                    throw new EMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
-                        $" Registered properties: {dbResult.EventPropertiesJson}");
 
                 return new EMEventInfoDto
                 {
                     EventName = dbResult.EventName,
                     EventPropertiesJson = dbResult.EventPropertiesJson
-                };// its ok. there is no problem. Return event info
+                };//Return event info
             }
             else // event not exist. Create it
             {
@@ -70,23 +66,19 @@ namespace EventManager.EventChecker
         {
             return _context.EMEventInfos.Select(x => new EMEventInfoDto { EventName = x.EventName, EventPropertiesJson = x.EventPropertiesJson }).ToList();
         }
-        public EMEventInfoDto CheckOrAddEMEventInfo<T>(EMEvent<T> data) where T : IEMEvent
+        public EMEventInfoDto GetOrAddEMEventInfo<T>(EMEvent<T> data, string propertiesJson) where T : IEMEvent
         {
-            var propertiesJson = GeneretePropertiesJson(data.EventData);
 
             //if event exist
             if (_context.EMEventInfos.Any(x => x.EventName == data.EventName))
             {
                 var dbResult = _context.EMEventInfos.FirstOrDefault(x => x.EventName == data.EventName);
-                if (dbResult.EventPropertiesJson != propertiesJson)//if event has different properties .Throw Exception
-                    throw new EMEventInvalidPropertyException($"{data.EventName} named event has different properties." +
-                        $" Registered properties: {dbResult.EventPropertiesJson}");
 
                 return new EMEventInfoDto
                 {
                     EventName = dbResult.EventName,
                     EventPropertiesJson = dbResult.EventPropertiesJson
-                };// its ok. there is no problem. Return event info
+                };
             }
             else // event not exist. Create it
             {
@@ -109,15 +101,8 @@ namespace EventManager.EventChecker
         }
 
 
-        public string GeneretePropertiesJson<T>(T data) where T : IEMEvent
-        {
-            Dictionary<string, string> propTypeNameDic = new Dictionary<string, string>();
-            //get all properties of event 
-            var properties = data.GetType().GetProperties();
-            foreach (var p in properties)
-                propTypeNameDic.Add(p.Name, p.PropertyType.Name);
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(propTypeNameDic);
-        }
+
+
     }
 }

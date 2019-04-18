@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManager.Core.interfaces
+namespace EventManager.Shared.Interfaces
 {
     public interface ICacheManager
     {

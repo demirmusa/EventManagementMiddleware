@@ -1,9 +1,8 @@
-﻿using EventManager.Core.Dto;
-using EventManager.Core.Extensions;
-using EventManager.Core.interfaces;
+﻿using EventManager.Core.Extensions;
 using EventManager.DefaultManager.Dto;
-using EventManager.DefaultManager.interfaces;
-using EventManager.EventChecker.Dto;
+using EventManager.DefaultManager.Interfaces;
+using EventManager.Shared.Dto;
+using EventManager.Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using System;
@@ -16,18 +15,17 @@ namespace EventManager.DefaultManager.Extensions
         /// Adds default cache manager (which use Memory cache. That's why you have to add memory cache to your project.), default rabbitmq publisher.
         /// <para>If you dont want to use them create your own one and inject them</para>
         /// </summary>
-        /// <param name="collection"></param>
+        /// <param name="services"></param>
         /// <param name="eventManagerOptions"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEMDefaultManager(this IServiceCollection collection,
-             Action<EventCheckerOptions> eventCheckerOptionsAction,
+        public static IServiceCollection AddEMDefaultManager(this IServiceCollection services,
              Action<EventManagerOptions> eventManagerOptions = null)
         {
-            collection.AddSingleton<ICacheManager, DefaultCacheManager>();
-            collection.AddSingleton<IDefaultRabbitMQPublisher, DefaultRabbitMQPublisher>();
+            services.AddSingleton<ICacheManager, DefaultCacheManager>();
+            services.AddSingleton<IDefaultRabbitMQPublisher, DefaultRabbitMQPublisher>();
 
-            collection.AddEventManagerCore<IDefaultRabbitMQPublisher, ICacheManager>(eventCheckerOptionsAction, eventManagerOptions);
-            return collection;
+            services.AddEventManagerCore<IDefaultRabbitMQPublisher, ICacheManager>(eventManagerOptions);
+            return services;
         }
 
         public static IServiceProvider InitializeEMDefaultManager(this IServiceProvider provider,

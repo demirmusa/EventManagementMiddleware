@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using NUnitTestProject1.dto;
 using System;
 using System.Threading.Tasks;
-using EventManager.Core.interfaces;
+using EventManager.Core.Interfaces;
 using EventManager.DefaultManager.Extensions;
-using EventManager.EventChecker.Extensions;
+using EventManager.EventChecker.SQL;
+using EventManager.EventChecker.WebApi;
 namespace Tests
 {
     public class EventPublishTest
@@ -17,10 +18,15 @@ namespace Tests
         {
             var services = new ServiceCollection();
 
-            services.AddEMDefaultManager(
-                   checkerOptions =>
-                       checkerOptions.UseSQL(sql => sql.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=eventDB;trusted_connection=yes;"))
-                );
+            services.AddEMDefaultManager(opt =>
+            {
+                opt.CheckIsEventUnique = true;
+            })
+            .UseSQLChecker(sql => sql.UseSqlServer("Data Source=LAPTOP-3O58F4FN;database=eventDB;trusted_connection=yes;"));
+            //.UseWebApiChecker(opt =>
+            //{
+            //    opt.BaseUrl = "";
+            //});
 
             var provider = services.BuildServiceProvider();
 

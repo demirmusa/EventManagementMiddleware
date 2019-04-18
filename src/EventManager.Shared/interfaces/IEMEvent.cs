@@ -1,5 +1,5 @@
 ﻿using System;
-namespace EventManager.Shared.interfaces
+namespace EventManager.Shared.Interfaces
 {
     public interface IEMEvent
     {

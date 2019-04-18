@@ -1,4 +1,5 @@
-﻿using EventManager.Core.interfaces;
+﻿using EventManager.Core.Interfaces;
+using EventManager.Shared.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 namespace EventManager.DefaultManager
