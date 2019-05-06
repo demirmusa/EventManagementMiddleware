@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EventManager.EventChecker.SQL.Data.DbEntities;
+using Microsoft.EntityFrameworkCore;
 
-namespace EventManager.EventChecker.Data.dbEntities
+namespace EventManager.EventChecker.SQL.Data
 {
     public class EventCheckerDbContext : DbContext
-    {      
+    {
         public DbSet<EMEventInfo> EMEventInfos { get; set; }
 
         public EventCheckerDbContext(DbContextOptions options)

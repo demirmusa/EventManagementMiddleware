@@ -1,4 +1,4 @@
-﻿using EventManager.Shared.interfaces;
+﻿using EventManager.Shared.Interfaces;
 namespace EventManager.Shared.Dto
 {
     public class EMEvent<T> where T : IEMEvent

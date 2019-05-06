@@ -1,5 +1,5 @@
 ﻿using EventManager.Core;
-using EventManager.Shared.interfaces;
+using EventManager.Shared.Interfaces;
 
 namespace NUnitTestProject1.dto
 {

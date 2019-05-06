@@ -1,8 +1,8 @@
-﻿using EventManager.Core.interfaces;
+﻿using EventManager.Core.Interfaces;
 using EventManager.DefaultManager.Dto;
 using RabbitMQ.Client;
 
-namespace EventManager.DefaultManager.interfaces
+namespace EventManager.DefaultManager.Interfaces
 {
     public interface IDefaultRabbitMQPublisher : IMessagePublisher
     {

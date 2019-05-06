@@ -1,7 +1,7 @@
-﻿using EventManager.Shared.interfaces;
+﻿using EventManager.Shared.Interfaces;
 using System.Threading.Tasks;
 
-namespace EventManager.Core.interfaces
+namespace EventManager.Core.Interfaces
 {
     public interface IEMPublisher
     {

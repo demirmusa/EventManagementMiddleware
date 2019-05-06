@@ -1,5 +1,5 @@
 ﻿using System;
-namespace EventManager.EventChecker.Data.dbEntities
+namespace EventManager.EventChecker.SQL.Data.DbEntities
 {
     public class EMEventInfo
     {

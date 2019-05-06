@@ -1,6 +1,6 @@
-﻿using EventManager.Core.interfaces;
+﻿using EventManager.Core.Interfaces;
 using EventManager.Shared.Dto;
-using EventManager.Shared.interfaces;
+using EventManager.Shared.Interfaces;
 using System;
 using System.Threading.Tasks;
 

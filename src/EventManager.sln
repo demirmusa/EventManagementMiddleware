@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager.Shared", "EventManager.Shared\EventManager.Shared.csproj", "{F1765542-863C-4BF7-BD2C-1B83BF984459}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{433A3058-99AE-4DD9-83E8-CE7C670D5988}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject1", "test\NUnitTestProject1\NUnitTestProject1.csproj", "{DB759C0E-4620-43E8-9F7F-81A5FA908275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.EventChecker.SQL", "EventManager.EventChecker.SQL\EventManager.EventChecker.SQL.csproj", "{464826F7-FF96-44F2-B263-F25F926E61D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.EventChecker.WebApi", "EventManager.EventChecker.WebApi\EventManager.EventChecker.WebApi.csproj", "{AD1E58C7-2A95-4CCF-A894-342E365206DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,14 @@ Global
 		{DB759C0E-4620-43E8-9F7F-81A5FA908275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB759C0E-4620-43E8-9F7F-81A5FA908275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB759C0E-4620-43E8-9F7F-81A5FA908275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{464826F7-FF96-44F2-B263-F25F926E61D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464826F7-FF96-44F2-B263-F25F926E61D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464826F7-FF96-44F2-B263-F25F926E61D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464826F7-FF96-44F2-B263-F25F926E61D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1E58C7-2A95-4CCF-A894-342E365206DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1E58C7-2A95-4CCF-A894-342E365206DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1E58C7-2A95-4CCF-A894-342E365206DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1E58C7-2A95-4CCF-A894-342E365206DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

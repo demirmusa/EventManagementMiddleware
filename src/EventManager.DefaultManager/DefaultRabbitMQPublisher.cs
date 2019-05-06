@@ -1,5 +1,5 @@
 ﻿using EventManager.DefaultManager.Dto;
-using EventManager.DefaultManager.interfaces;
+using EventManager.DefaultManager.Interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Text;
